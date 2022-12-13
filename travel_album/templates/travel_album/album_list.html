@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+    {% for Album in Albums %}
+        <a href="{% url 'photo-list' Album.diary.pk %}">{{ Album.location }}</a>
+    {% endfor %}
+
+{% endblock %}

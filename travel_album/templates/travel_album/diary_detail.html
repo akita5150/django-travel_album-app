@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="text-center">
+    <h2>{{diary.prefecture}}</h2>
+    <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
+    <p>[メモ]  {{diary.memo}}</p>
+    <a href="{% url 'album-list' diary.pk %}">アルバム</a>
+</div>
+
+{% endblock %}

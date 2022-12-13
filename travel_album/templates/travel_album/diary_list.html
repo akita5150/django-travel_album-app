@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for diary in diaries %}
+
+<a href="{% url 'diary-detail' diary.pk %}">{{diary.prefecture}}</a>
+
+{% endfor %}
+{% endblock %}

@@ -4,7 +4,13 @@
 
 {% for diary in diaries %}
 
-<a href="{% url 'diary-detail' diary.pk %}">{{diary.prefecture}}</a>
+<h2>
+    <a href="{% url 'diary-detail' diary.pk %}">{{diary.prefecture}}</a>
+</h2>
+<p>{{diary.start_date}} ～ {{diary.end_date}}</p>
+<br>
 
 {% endfor %}
+
+
 {% endblock %}

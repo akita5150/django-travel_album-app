@@ -6,5 +6,5 @@ urlpatterns = [
     path('', Diary_listView.as_view(), name='diary-list'),
     path('diary/<int:pk>', Diary_DetailView.as_view(), name='diary-detail'),
     path('diary/<int:diary_pk>/album', Album_listView.as_view(), name='album-list'),
-    path('diary/<int:album_diary_pk>/album/photo', Photo_listView.as_view(), name='photo-list'),
+    path('diary/<int:album_diary_pk>/album/<int:album_pk>/photo', Photo_listView.as_view(), name='photo-list'),
 ]

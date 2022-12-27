@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'travel_album.apps.TravelAlbumConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,7 @@ PREFECTURES = [
     ("鹿児島県","鹿児島県"),
     ("沖縄県"  ,"沖縄県"  ),  
 ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'diary-list'
+LOGOUT_REDIRECT_URL = 'login'

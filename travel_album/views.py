@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from travel_album.models import Diary, Album, Photo, Prefectures
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -14,6 +15,17 @@ class Diary_DetailView(DetailView):
     model = Diary
     template_name = 'travel_album/diary_detail.html'
     context_object_name = 'diary'
+
+class Diary_CreateView(CreateView):
+    model = Diary
+    template_name = 'travel_album/diary_create.html'
+    fields = ['user','prefecture', 'start_date', 'end_date', 'memo']
+    # user情報の初期値設定
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['user'] = self.request.user   
+        return initial
+    success_url = reverse_lazy('diary-list')
 
 class Album_listView(ListView):
     model = Album

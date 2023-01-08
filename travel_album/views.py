@@ -19,12 +19,16 @@ class Diary_DetailView(DetailView):
 class Diary_CreateView(CreateView):
     model = Diary
     template_name = 'travel_album/diary_create.html'
-    fields = ['user','prefecture', 'start_date', 'end_date', 'memo']
-    # user情報の初期値設定
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['user'] = self.request.user   
-        return initial
+    fields = ['prefecture', 'start_date', 'end_date', 'memo']
+    
+    def form_valid(self, form):
+        # 変数（object）にcommit=Falseでsaveメソッドを呼び出して保存する前のデータ取得
+        object = form.save(commit=False)
+        # userフィールドをログインしているuser
+        object.user = self.request.user
+        # object保存
+        object.save()
+        return super().form_valid(form)
     success_url = reverse_lazy('diary-list')
     def get_success_url(self):
         # 新規データのID取得
@@ -45,12 +49,15 @@ class Album_listView(ListView):
 class Album_CreateView(CreateView):
     model = Album
     template_name = 'travel_album/album_create.html'
-    fields = ['diary', 'location']
-    def get_initial(self, **kwargs):
-        initial = super().get_initial()
-        Album_list = Diary.objects.filter(id=self.kwargs['diary_pk'])
-        initial['diary'] = Album_list[0]
-        return initial
+    fields = ['location']
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        # urlのpkからdiary抽出 ※リスト型で抽出される
+        diary = Diary.objects.filter(id=self.kwargs['diary_pk'])
+        object.diary = diary[0]
+        # object保存
+        object.save()
+        return super().form_valid(form)
     success_url = reverse_lazy('diary-list')
 
 class Photo_listView(ListView):

@@ -2,13 +2,17 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from travel_album.models import Diary, Album, Photo, Prefectures
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
-class Diary_listView(ListView):
+class Diary_listView(LoginRequiredMixin,ListView):
     model = Diary
     template_name = 'travel_album/diary_list.html'
     context_object_name = 'diaries'
+    def get_queryset(self):
+        diary = Diary.objects.filter(user=self.request.user)
+        return diary
 
 
 class Diary_DetailView(DetailView):
@@ -22,7 +26,7 @@ class Diary_CreateView(CreateView):
     fields = ['prefecture', 'start_date', 'end_date', 'memo']
     
     def form_valid(self, form):
-        # 変数（object）にcommit=Falseでsaveメソッドを呼び出して保存する前のデータ取得
+        # 変数（object）にcommit=False保存しないでデータ取得
         object = form.save(commit=False)
         # userフィールドをログインしているuser
         object.user = self.request.user

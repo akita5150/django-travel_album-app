@@ -7,6 +7,8 @@
     <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
     <p>[メモ]  {{diary.memo}}</p>
     <a href="{% url 'album-list' diary.pk %}">アルバム</a>
+    <br>
+    <a href="{% url 'album-create' diary.pk %}">アルバム追加</a>
 </div>
 
 {% endblock %}

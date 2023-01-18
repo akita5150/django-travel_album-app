@@ -7,8 +7,26 @@
     <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
     <p>[メモ]  {{diary.memo}}</p>
     <a href="{% url 'album-list' diary.pk %}">アルバム</a>
-    <br>
-    <a href="{% url 'album-create' diary.pk %}">アルバム追加</a>
 </div>
+
+<div class="comment-form">
+  <h2>アルバム追加</h2>
+  
+  <form action="{% url 'album-add' diary.pk %}" method="post">
+    {% csrf_token %}
+    {{ album_add }}
+    <div>
+      <button type="submit">送信</button>
+    </div>
+  </form>
+</div>
+<!-- <form method="post">
+    {% for form in edit_formset %}
+      {{form.as_p}
+    {% endfor %}
+    {% csrf_token %}
+    {{ edit_formset.management_form }}
+    <button type="submit">送信</button>
+</form> -->
 
 {% endblock %}

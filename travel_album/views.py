@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from travel_album.models import Diary, Album, Photo, Prefectures
+from travel_album.forms import SingleUploadForms, AlbumAddForms
+from django import forms
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
 
 
 # Create your views here.
@@ -19,6 +22,23 @@ class Diary_DetailView(DetailView):
     model = Diary
     template_name = 'travel_album/diary_detail.html'
     context_object_name = 'diary'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['album_add'] = AlbumAddForms
+        return context
+
+class Album_addView(CreateView):
+    model = Album
+    form_class = AlbumAddForms
+    def form_valid(self, form):
+        # saveしない
+        album = form.save(commit=False)
+        # diaryが実在するか確認
+        diary_pk = self.kwargs['diary_pk']
+        diary = get_object_or_404(Diary, pk=diary_pk)
+        album.diary = diary
+        album.save()
+        return redirect('diary-detail', pk=diary_pk)
 
 class Diary_CreateView(CreateView):
     model = Diary
@@ -50,19 +70,21 @@ class Album_listView(ListView):
         context["Albums"] = Album_list
         return context
 
-class Album_CreateView(CreateView):
-    model = Album
-    template_name = 'travel_album/album_create.html'
-    fields = ['location']
-    def form_valid(self, form):
-        object = form.save(commit=False)
-        # urlのpkからdiary抽出 ※リスト型で抽出される
-        diary = Diary.objects.filter(id=self.kwargs['diary_pk'])
-        object.diary = diary[0]
-        # object保存
-        object.save()
-        return super().form_valid(form)
-    success_url = reverse_lazy('diary-list')
+
+
+# class Album_CreateView(CreateView):
+#     model = Album
+#     template_name = 'travel_album/album_create.html'
+#     fields = ['location']
+#     def form_valid(self, form):
+#         object = form.save(commit=False)
+#         # urlのpkからdiary抽出 ※リスト型で抽出される
+#         diary = Diary.objects.filter(id=self.kwargs['diary_pk'])
+#         object.diary = diary[0]
+#         # object保存
+#         object.save()
+#         return super().form_valid(form)
+#     success_url = reverse_lazy('diary-list')
 
 class Photo_listView(ListView):
     model = Photo

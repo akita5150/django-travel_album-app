@@ -24,6 +24,8 @@ class Diary_DetailView(DetailView):
     context_object_name = 'diary'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        album_list = Album.objects.filter(diary_id=self.kwargs['pk'])
+        context['album_list'] = album_list
         context['album_add'] = AlbumAddForms
         return context
 

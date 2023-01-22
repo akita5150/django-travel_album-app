@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-9">
+        <form method="POST">
+            {% csrf_token %}
+            <p>このAlbumを削除しますか？</p>
+            <button type="submit" class="btn btn-danger">送信</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

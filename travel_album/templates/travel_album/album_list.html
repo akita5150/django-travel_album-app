@@ -4,6 +4,7 @@
 
     {% for Album in Albums %}
         <a href="{% url 'photo-list' Album.diary.pk Album.pk %}">{{ Album.location }}</a>
+        
     {% endfor %}
 
 {% endblock %}

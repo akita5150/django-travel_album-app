@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from travel_album.models import Diary, Album, Photo, Prefectures
 from travel_album.forms import SingleUploadForms, AlbumAddForms
 from django import forms
@@ -17,6 +17,10 @@ class Diary_listView(LoginRequiredMixin,ListView):
         diary = Diary.objects.filter(user=self.request.user)
         return diary
 
+class Diary_DeleteView(LoginRequiredMixin, DeleteView):
+    model = Diary
+    template_name = 'travel_album/diary_delete.html'
+    success_url = reverse_lazy('diary-list')
 
 class Diary_DetailView(DetailView):
     model = Diary
@@ -87,6 +91,12 @@ class Album_listView(ListView):
 #         object.save()
 #         return super().form_valid(form)
 #     success_url = reverse_lazy('diary-list')
+
+class Album_DeleteView(LoginRequiredMixin, DeleteView):
+    model = Album
+    template_name = 'travel_album/album_delete.html'
+    def get_success_url(self):
+        return reverse('diary-detail', kwargs={'pk':self.object.diary.pk})
 
 class Photo_listView(ListView):
     model = Photo

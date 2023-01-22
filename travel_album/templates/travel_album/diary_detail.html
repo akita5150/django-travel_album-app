@@ -8,6 +8,8 @@
     <p>[メモ]  {{diary.memo}}</p>
     {% for album in album_list %}
     <a href="{% url 'photo-list' album.diary.pk album.pk %}">{{ album.location }}</a>
+    <a href="{% url 'album-delete' album.diary.pk album.pk %}">削除</a>
+    <br>
     {% endfor %}
     <h4 class="mt-3">アルバム追加</h4>
     <form action="{% url 'album-add' diary.pk %}" method="post">
@@ -17,10 +19,9 @@
       <button type="submit">追加</button>
     </div>
   </form>
+  <br>
+  <a href="{% url 'diary-delete' diary.pk %}">△アルバム削除</a>
 </div>
 
-<div class="comment-form">
-  
-</div>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from travel_album.models import Diary, Album, Photo, Prefectures
 from travel_album.forms import SingleUploadForms, AlbumAddForms
 from django import forms
@@ -64,8 +64,18 @@ class Diary_CreateView(CreateView):
         # 新規データのID取得
         id = self.object.id
         return reverse("diary-detail", kwargs={"pk": id})
-    
 
+class Diary_UpdateView(UpdateView):
+    model = Diary
+    template_name = 'travel_album/diary_edit.html'
+    fields = ['prefecture', 'start_date', 'end_date', 'memo']
+    success_url = reverse_lazy('diary-list')
+    def get_success_url(self):
+        # 新規データのID取得
+        id = self.object.id
+        return reverse("diary-detail", kwargs={"pk": id})
+
+    
 class Album_listView(ListView):
     model = Album
     template_name = 'travel_album/album_list.html'
@@ -95,6 +105,7 @@ class Album_listView(ListView):
 class Album_DeleteView(LoginRequiredMixin, DeleteView):
     model = Album
     template_name = 'travel_album/album_delete.html'
+    context_object_name = 'album'
     def get_success_url(self):
         return reverse('diary-detail', kwargs={'pk':self.object.diary.pk})
 

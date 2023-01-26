@@ -1,5 +1,5 @@
 from django.urls import include, path
-from travel_album.views import Diary_listView, Diary_DetailView, Diary_DeleteView, Album_listView, Photo_listView, Diary_CreateView, Album_addView, Album_DeleteView
+from travel_album.views import Diary_listView, Diary_DetailView, Diary_DeleteView, Album_listView, Photo_listView, Diary_CreateView, Diary_UpdateView, Album_addView, Album_DeleteView
 
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     path('diary/<int:pk>', Diary_DetailView.as_view(), name='diary-detail'),
     path('diary/create', Diary_CreateView.as_view(), name='diary-create'),
     path('diary/<int:pk>/delete', Diary_DeleteView.as_view(), name='diary-delete'),
+    path('diary/<int:pk>/edit', Diary_UpdateView.as_view(), name='diary-edit'),
     path('diary/<int:diary_pk>/album_add', Album_addView.as_view(), name='album-add'),
     path('diary/<int:diary_pk>/album', Album_listView.as_view(), name='album-list'),
     path('diary/<int:diary_pk>/album/<int:pk>', Album_DeleteView.as_view(), name='album-delete'),

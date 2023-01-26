@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>編集</h2>
+
+<div class="text-center mt-3">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class="table mb-5">
+            {{ form.as_table }}
+        </table>
+        <div class="d-grid gap-1 col-5 mx-auto">
+            <input class="btn btn-success" type="submit" value="送信">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

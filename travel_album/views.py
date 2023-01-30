@@ -111,7 +111,7 @@ class Album_DeleteView(LoginRequiredMixin, DeleteView):
 
 class Photo_listView(ListView):
     model = Photo
-    template_name = 'travel_album/Photo_list.html'
+    template_name = 'travel_album/photo_list.html'
     context_object_name = 'Photos'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -119,5 +119,14 @@ class Photo_listView(ListView):
         context["Photos"] = Photo_list
         return context
 
-
-
+class Album_DetailView(DetailView):
+    model = Album
+    template_name = 'travel_album/photo_list.html'
+    context_object_name = 'Album'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        photo_list = Photo.objects.filter(album_id=self.kwargs['pk'])
+        context['photo_list'] = photo_list
+        print(context['photo_list'])
+        # context['album_add'] = AlbumAddForms
+        return context

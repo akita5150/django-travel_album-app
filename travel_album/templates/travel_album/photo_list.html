@@ -3,13 +3,13 @@
 {% block content %}
 
 <div class="row mt-3 mb-3">
-    {% for Photo in Photos %}
+    {% for Photo in photo_list %}
     <div class="col-3 d-flex align-items-center">
         <img src="{{ Photo.photo.url }}" alt="{{ Photo.album }}"  class="border w-75 d-block mx-auto">
     </div>
     {% endfor %}
 </div>
 <div class="text-center">
-    
+
 </div>
 {% endblock %}

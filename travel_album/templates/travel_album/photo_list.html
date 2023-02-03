@@ -8,6 +8,13 @@
         <img src="{{ Photo.photo.url }}" alt="{{ Photo.album }}"  class="border w-75 d-block mx-auto">
     </div>
     {% endfor %}
+    <form action="{% url 'photo-add' Album.diary.pk Album.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+         {{ photo_add }}
+       <div class="mt-2">
+         <button type="submit">追加</button>
+       </div>
+    </form>
 </div>
 <div class="text-center">
 

@@ -17,9 +17,8 @@ class AlbumAddForms(forms.ModelForm):
     #         object.save()
     #         return super().form_valid(form)
 
-class SingleUploadForms(forms.ModelForm):
+class PhotoAddForms(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = '__all__'
-
+        fields = ('photo',)
 

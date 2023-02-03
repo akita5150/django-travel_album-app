@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from travel_album.models import Diary, Album, Photo, Prefectures
-from travel_album.forms import SingleUploadForms, AlbumAddForms
+from travel_album.forms import AlbumAddForms, PhotoAddForms
 from django import forms
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -127,6 +127,18 @@ class Album_DetailView(DetailView):
         context = super().get_context_data(**kwargs)
         photo_list = Photo.objects.filter(album_id=self.kwargs['pk'])
         context['photo_list'] = photo_list
-        print(context['photo_list'])
-        # context['album_add'] = AlbumAddForms
+        context['photo_add'] = PhotoAddForms
         return context
+
+class Photo_addView(CreateView):
+    model = Photo
+    form_class = PhotoAddForms
+    def form_valid(self, form):
+        # saveしない
+        photo = form.save(commit=False)
+        # diaryが実在するか確認
+        album_pk = self.kwargs['album_pk']
+        album = get_object_or_404(Album, pk=album_pk)
+        photo.album = album
+        photo.save()
+        return redirect('diary-detail', pk=album_pk)

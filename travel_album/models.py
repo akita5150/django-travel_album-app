@@ -15,6 +15,7 @@ class Prefectures(models.Model):
 
 class Diary(models.Model):
     user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE)
+    title = models.CharField(verbose_name='タイトル', max_length=50)
     prefecture = models.CharField(verbose_name='都道府県名', choices=PREFECTURES, max_length=4)
     start_date = models.DateField(verbose_name='旅行開始日', null=True, blank=True)
     end_date = models.DateField(verbose_name='終了日', null=True, blank=True)

@@ -7,6 +7,7 @@
         <form method="POST">
             {% csrf_token %}
             <p>このDiaryを削除しますか？</p>
+            <p>{{diary.title}}</p>
             <button type="submit" class="btn btn-danger">送信</button>
         </form>
     </div>

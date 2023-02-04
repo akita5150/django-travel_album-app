@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="text-center">
-    <h2>{{diary.prefecture}}</h2>
+    <h2>{{diary.title}}</h2>
+    <p>{{diary.prefecture}}</p>
     <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
     <p>[メモ]  {{diary.memo}}</p>
     {% for album in album_list %}

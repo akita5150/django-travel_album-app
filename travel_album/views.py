@@ -49,7 +49,7 @@ class Album_addView(CreateView):
 class Diary_CreateView(CreateView):
     model = Diary
     template_name = 'travel_album/diary_create.html'
-    fields = ['prefecture', 'start_date', 'end_date', 'memo']
+    fields = ['title','prefecture', 'start_date', 'end_date', 'memo']
     
     def form_valid(self, form):
         # 変数（object）にcommit=False保存しないでデータ取得
@@ -68,7 +68,7 @@ class Diary_CreateView(CreateView):
 class Diary_UpdateView(UpdateView):
     model = Diary
     template_name = 'travel_album/diary_edit.html'
-    fields = ['prefecture', 'start_date', 'end_date', 'memo']
+    fields = ['title','prefecture', 'start_date', 'end_date', 'memo']
     success_url = reverse_lazy('diary-list')
     def get_success_url(self):
         # 新規データのID取得

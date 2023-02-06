@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-9">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col-3 d-flex align-items-center">
+                <img src="{{Photo.photo.url}}" alt="{{Photo.album}}" class="border w-75 d-block mx-auto">
+            </div>
+            <p>削除しますか？</p>
+            <button type="submit" class="btn btn-danger">はい</button>
+        </form>
+        <a href="{% url 'photo-list' Photo.album.diary.pk Photo.album.pk %}">いいえ</a>
+    </div>
+</div>
+
+{% endblock %}

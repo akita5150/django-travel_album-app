@@ -142,3 +142,10 @@ class Photo_addView(CreateView):
         photo.album = album
         photo.save()
         return redirect('diary-detail', pk=album_pk)
+
+class Photo_DeleteView(DeleteView):
+    model = Photo
+    template_name = "travel_album/photo_delete.html"
+    context_object_name = "Photo"
+    def get_success_url(self):
+        return reverse('photo-list', kwargs={'diary_pk':self.object.album.diary.pk,'pk':self.object.album.pk})

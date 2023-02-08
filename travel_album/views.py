@@ -13,6 +13,8 @@ class Diary_listView(LoginRequiredMixin,ListView):
     model = Diary
     template_name = 'travel_album/diary_list.html'
     context_object_name = 'diaries'
+    paginate_by = 1
+
     def get_queryset(self):
         diary = Diary.objects.filter(user=self.request.user)
         return diary

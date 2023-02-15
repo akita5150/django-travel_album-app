@@ -13,10 +13,10 @@ class Diary_listView(LoginRequiredMixin,ListView):
     model = Diary
     template_name = 'travel_album/diary_list.html'
     context_object_name = 'diaries'
-    paginate_by = 1
+    paginate_by = 3
 
     def get_queryset(self):
-        diary = Diary.objects.filter(user=self.request.user)
+        diary = Diary.objects.filter(user=self.request.user).order_by('-start_date')
         return diary
 
 class Diary_DeleteView(LoginRequiredMixin, DeleteView):

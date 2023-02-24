@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', include('travel_album.urls')),
+    path('timeline/', include('timeline.urls'))
 ]
 
 if settings.DEBUG:

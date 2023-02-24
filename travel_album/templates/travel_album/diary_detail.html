@@ -12,6 +12,13 @@
     <a href="{% url 'album-delete' album.diary.pk album.pk %}">削除</a>
     <br>
     {% endfor %}
+    <p>
+      {% for tag in diary.tags.all %}
+      <span class="badge bg-light text-dark">
+          {{tag}}
+      </span>
+      {% endfor %}
+    </p>
     <h4 class="mt-3">アルバム追加</h4>
     <form action="{% url 'album-add' diary.pk %}" method="post">
      {% csrf_token %}

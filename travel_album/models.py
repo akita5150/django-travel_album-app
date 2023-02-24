@@ -28,6 +28,7 @@ class Diary(models.Model):
     end_date = models.DateField(verbose_name='終了日', null=True, blank=True)
     memo = models.TextField(verbose_name='メモ', max_length=10000, null=True, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='タグ',blank=True)
+    is_publish = models.BooleanField(verbose_name='公開するか',default=False)
     
     def __str__(self):
         return self.prefecture

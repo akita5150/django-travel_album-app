@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'travel_album.apps.TravelAlbumConfig',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'timeline.apps.TimelineConfig'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="text-center">
+    <h2>{{post.title}}</h2>
+    <p>{{post.prefecture}}</p>
+    <p>[旅行日]  {{post.start_date}} ～ {{post.end_date}}</p>
+    <p>[メモ]  {{post.memo}}</p>
+    {% for album in album_list %}
+    <a href="{% url 'photo-list' album.diary.pk album.pk %}">{{ album.location }}</a>
+    <br>
+    {% endfor %}
+    <p>
+      {% for tag in post.tags.all %}
+      <span class="badge bg-light text-dark">
+          {{tag}}
+      </span>
+      {% endfor %}
+    </p>
+  <br>
+</div>
+
+
+{% endblock %}

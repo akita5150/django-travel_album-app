@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for post in posts %}
+
+<p>{{post.user.username}} さん</p>
+<h2>
+    <a href="{% url 'post-detail' post.pk %}">{{post.title}}</a>
+</h2>
+
+<p>{{post.start_date}} ～ {{post.end_date}}</p>
+<br>
+
+{% endfor %}
+
+{% include "travel_album/snippets/pagination.html" %}
+
+
+{% endblock %}

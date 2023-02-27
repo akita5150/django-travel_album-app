@@ -18,5 +18,11 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         album_list = Album.objects.filter(diary_id=self.kwargs['pk'])
+        photo_list = []
+        for album_name in album_list:
+            photo = Photo.objects.filter(album=album_name)
+            photo_list.append(photo)
         context['album_list'] = album_list
+        context['photo_list'] = photo_list
+        print(context['photo_list'])
         return context

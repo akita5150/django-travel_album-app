@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="text-center">
+<div class="text-left">
     <h2>{{diary.title}}</h2>
     <p>{{diary.prefecture}}</p>
     <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
@@ -10,7 +10,18 @@
     {% for album in album_list %}
     <a href="{% url 'photo-list' album.diary.pk album.pk %}">{{ album.location }}</a>
     <a href="{% url 'album-delete' album.diary.pk album.pk %}">削除</a>
-    <br>
+    <div class="row mt-3 mb-3">
+        {% for Photos in photo_list %}
+            {% for Photo in Photos %}
+                {% if album == Photo.album %}
+                    <div class="col-2 d-flex align-items-center">
+                        <img src="{{ Photo.photo.url }}" alt="{{ Photo.album }}"  class="border w-100 d-block mx-auto">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        <br>
+    </div>
     {% endfor %}
     <p>
       {% for tag in diary.tags.all %}

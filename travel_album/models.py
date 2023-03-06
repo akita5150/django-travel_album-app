@@ -31,7 +31,7 @@ class Diary(models.Model):
     is_publish = models.BooleanField(verbose_name='公開するか',default=False)
     
     def __str__(self):
-        return self.prefecture
+        return self.title
 
 class Album(models.Model):
     diary = models.ForeignKey(Diary, verbose_name='旅行県', on_delete=models.CASCADE)

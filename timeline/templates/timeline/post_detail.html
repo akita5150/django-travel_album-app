@@ -17,6 +17,7 @@
     {% for album in album_list %}
     <div class="row mt-3 mb-3">
         {% for Photos in photo_list %}
+            <!-- 写真があるアルバム名だけ表示させる -->
             {% if album == Photos.0.album %}
                 <a href="{% url 'photo-list' album.diary.pk album.pk %}">{{ album.location }}</a>
             {% endif %}

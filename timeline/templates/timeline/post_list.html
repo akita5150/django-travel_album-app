@@ -3,15 +3,15 @@
 {% block content %}
 
 {% for post in posts %}
-
-<p>{{post.user.username}} さん</p>
-<h2>
-    <a href="{% url 'post-detail' post.pk %}">{{post.title}}</a>
-</h2>
-
-<p>{{post.start_date}} ～ {{post.end_date}}</p>
-<br>
-
+<div class="card mt-3">
+    <h8 class="card-header">{{post.user.username}} さん</h8>
+    <div class="card-body">
+      <h3 class="card-title">{{post.title}}</h3>
+      <p class="card-text">{{post.start_date}} ～ {{post.end_date}}</p>
+      <p></p>
+      <a href="{% url 'post-detail' post.pk %}" class="btn btn-primary">詳細</a>
+    </div>
+</div>
 {% endfor %}
 
 {% include "travel_album/snippets/pagination.html" %}

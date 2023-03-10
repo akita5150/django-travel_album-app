@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<div class="text-left m-3" >
+    <h1>{{user.username}}</h1>
+    <p><a href="">フォロー中</a>　　　<a href="">フォロワー</a></p>
+    <p></p>
+</div>
 {% for diary in diaries %}
 
-<h2>
-    <a href="{% url 'diary-detail' diary.pk %}">{{diary.title}}</a>
-</h2>
-<p>{{diary.prefecture}}</p>
-<p>{{diary.start_date}} ～ {{diary.end_date}}</p>
-<br>
+<div class="card mt-3">
+    <h8 class="card-header">{{diary.user.username}} さん</h8>
+    <div class="card-body">
+      <h3 class="card-title">{{diary.title}}</h3>
+      <p class="card-text">{{diary.start_date}} ～ {{diary.end_date}}</p>
+      <p></p>
+      <a href="{% url 'diary-detail' diary.pk %}" class="btn btn-primary">詳細</a>
+    </div>
+</div>
 
 {% endfor %}
+
+
 
 {% include "travel_album/snippets/pagination.html" %}
 

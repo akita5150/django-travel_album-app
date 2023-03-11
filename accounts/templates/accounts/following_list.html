@@ -2,9 +2,13 @@
 
 {% block content %}
 
+
 <div class="text-left">
+    <h2>フォロー中</h2>
     {% for following in information.following.all %}
-    <p>{{ following }}</p>
+    <p>
+        <a href="{% url 'userpage' following.pk %}">{{ following }}</a>
+    </p>
     {% endfor %} 
 </div>
 

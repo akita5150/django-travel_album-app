@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView, ListView, DetailView
@@ -40,6 +40,16 @@ class Following_DetailView(DetailView):
         information = User_information.objects.get(user_id=self.kwargs['pk'])
         context['information'] = information
         return context
-        
-    
-    
+
+def Follow(request,id):
+    login_user = request.user
+    user = get_object_or_404(User, pk=id)
+    # user = User.objects.get(id=kwargs['pk'])
+    login_user_information = User_information.objects.get(user=request.user)   
+    # 表示しているユーザーをフォロー
+    login_user_information.following.add(user)
+    login_user_information.save()
+    print('~~~~')
+    print(login_user_information)
+    print(user)
+    return redirect('userpage', user.id)

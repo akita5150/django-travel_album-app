@@ -5,7 +5,7 @@
     <h1>{{User.username}}</h1>
     <p><a href="{% url 'following-list' User.pk %}">フォロー中</a>　　　<a href="">フォロワー</a></p>
     {% if User in login_user_information.following.all %}
-    <a href="" class="btn btn-primary">フォロー中</a>
+    <a href="{% url 'un_follow' User.pk %}" class="btn btn-primary">フォロー中</a>
     {% else %}
     <a href="{% url 'follow' User.pk %}" class="btn btn-primary">フォロー</a>
     {% endif %}

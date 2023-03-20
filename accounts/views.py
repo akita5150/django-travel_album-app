@@ -40,16 +40,30 @@ class Following_DetailView(DetailView):
         information = User_information.objects.get(user_id=self.kwargs['pk'])
         context['information'] = information
         return context
+    
+class Like_postView(DetailView):
+    model = User
+    template_name = 'accounts/like_post.html'
+    context_object_name = 'user'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        login_user_information = User_information.objects.get(user=self.request.user)
+        context['login_user'] = login_user_information
+        return context
 
 def Follow(request,id):
     login_user = request.user
     user = get_object_or_404(User, pk=id)
-    # user = User.objects.get(id=kwargs['pk'])
     login_user_information = User_information.objects.get(user=request.user)   
     # 表示しているユーザーをフォロー
     login_user_information.following.add(user)
     login_user_information.save()
-    print('~~~~')
-    print(login_user_information)
-    print(user)
     return redirect('userpage', user.id)
+
+def UnFollow(request,id):
+    user = get_object_or_404(User, pk=id)
+    login_user_information = User_information.objects.get(user=request.user)
+    login_user_information.following.remove(user)
+    login_user_information.save()
+    return redirect('userpage', user.id)
+

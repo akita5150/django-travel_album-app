@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from travel_album.models import Diary, Album, Photo
 from travel_album.forms import AlbumAddForms, PhotoAddForms
+from accounts.models import User_information
 from django import forms
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 
 

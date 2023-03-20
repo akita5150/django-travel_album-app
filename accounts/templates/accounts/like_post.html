@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for diary in login_user_information.like_post.all %}
+
+<div class="card mt-3">
+    <h8 class="card-header">{{diary.user.username}} さん</h8>
+    <div class="card-body">
+      <h3 class="card-title">{{diary.title}}</h3>
+      <p class="card-text">{{diary.start_date}} ～ {{diary.end_date}}</p>
+      <p></p>
+      <a href="{% url 'diary-detail' diary.pk %}" class="btn btn-primary">詳細</a>
+    </div>
+</div>
+
+{% endfor %}
+
+
+
+{% include "travel_album/snippets/pagination.html" %}
+
+
+{% endblock %}

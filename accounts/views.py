@@ -40,16 +40,22 @@ class Following_DetailView(DetailView):
         information = User_information.objects.get(user_id=self.kwargs['pk'])
         context['information'] = information
         return context
-    
-class Like_postView(DetailView):
-    model = User
+
+class Like_postView(ListView):
+    model = Diary
     template_name = 'accounts/like_post.html'
-    context_object_name = 'user'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    context_object_name = 'posts'
+    def get_queryset(self):
         login_user_information = User_information.objects.get(user=self.request.user)
-        context['login_user'] = login_user_information
-        return context
+        post = login_user_information.like_post.all()
+        return post
+    
+def Like(request,id):
+    post = get_object_or_404(Diary, pk=id)
+    login_user_information = User_information.objects.get(user=request.user)
+    login_user_information.like_post.add(post)
+    login_user_information.save()
+    return redirect('post-detail', post.id)
 
 def Follow(request,id):
     login_user = request.user

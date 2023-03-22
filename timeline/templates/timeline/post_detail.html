@@ -7,6 +7,7 @@
     <p>{{post.prefecture}}</p>
     <p>[旅行日]  {{post.start_date}} ～ {{post.end_date}}</p>
     <p>[メモ]  {{post.memo}}</p>
+    <a href="{% url 'like' post.pk %}" class="btn">いいね👍</a>
     <p>
         {% for tag in post.tags.all %}
         <span class="badge bg-light text-dark">

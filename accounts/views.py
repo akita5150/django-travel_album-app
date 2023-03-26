@@ -57,6 +57,14 @@ def Like(request,id):
     login_user_information.save()
     return redirect('post-detail', post.id)
 
+def Like_remove(request,id):
+    post =get_object_or_404(Diary, pk=id)
+    login_user_information = User_information.objects.get(user=request.user)
+    login_user_information.like_post.remove(post)
+    login_user_information.save()
+    return redirect('post-detail', post.id)
+    
+
 def Follow(request,id):
     login_user = request.user
     user = get_object_or_404(User, pk=id)
@@ -66,7 +74,7 @@ def Follow(request,id):
     login_user_information.save()
     return redirect('userpage', user.id)
 
-def UnFollow(request,id):
+def Follow_remove(request,id):
     user = get_object_or_404(User, pk=id)
     login_user_information = User_information.objects.get(user=request.user)
     login_user_information.following.remove(user)

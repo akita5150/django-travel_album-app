@@ -30,6 +30,9 @@ class PostDetailView(DetailView):
         for album_name in album_list:
             photo = Photo.objects.filter(album=album_name)
             photo_list.append(photo)
+        login_user_information = User_information.objects.get(user=self.request.user)
         context['album_list'] = album_list
         context['photo_list'] = photo_list
+        context['login_user_information'] = login_user_information
         return context
+    

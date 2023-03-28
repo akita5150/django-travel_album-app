@@ -24,7 +24,7 @@ class UserPage_View(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post_list = Diary.objects.filter(user_id=self.kwargs['pk'],is_publish=True)
-        # user_information = User_information.objects.get(user_id=self.kwargs['pk'])
+        # user_inform,.ation = User_information.objects.get(user_id=self.kwargs['pk'])
         login_user_information = User_information.objects.get(user_id=self.request.user)
         context['posts'] = post_list
         # context['user_information'] = user_information
@@ -36,9 +36,22 @@ class Following_DetailView(DetailView):
     template_name = 'accounts/following_list.html'
     context_object_name = 'User'
     def get_context_data(self, **kwargs):
+        a_u = self.request.user
+        print(a_u.followed_by.all())
         context = super().get_context_data(**kwargs)
         information = User_information.objects.get(user_id=self.kwargs['pk'])
         context['information'] = information
+        return context
+    
+class Follower_DetailView(DetailView):
+    model = User
+    template_name = 'accounts/follower_list.html'
+    context_object_name = 'User'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(id=self.kwargs['pk'])
+        follower_list = user.followed_by.all()
+        context['follower_list'] = follower_list 
         return context
 
 class Like_postView(ListView):

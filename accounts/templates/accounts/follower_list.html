@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="text-left">
+    <h2>フォロワー</h2>
+    {% for follower in follower_list.all %}
+    <p>
+        <a href="{% url 'userpage' follower.pk %}">{{ follower.user }}</a>
+    </p>
+    {% endfor %} 
+</div>
+
+{% endblock content %}

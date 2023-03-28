@@ -3,7 +3,7 @@
 {% block content %}
 <div class="text-left m-3" >
     <h1>{{user.username}}</h1>
-    <p><a href="{% url 'following-list' user.pk %}">フォロー中</a>　　　<a href="">フォロワー</a></p>
+    <p><a href="{% url 'following-list' user.pk %}">フォロー中</a>　　　<a href="{% url 'follower-list' user.pk %}">フォロワー</a></p>
     <p></p>
 </div>
 {% for diary in diaries %}

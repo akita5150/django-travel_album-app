@@ -24,11 +24,16 @@ class UserPage_View(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post_list = Diary.objects.filter(user_id=self.kwargs['pk'],is_publish=True)
-        # user_inform,.ation = User_information.objects.get(user_id=self.kwargs['pk'])
-        login_user_information = User_information.objects.get(user_id=self.request.user)
+        login_user = User_information.objects.get(user_id=self.request.user)
+        mutual_follow_user = []
+        for following_user in login_user.following.all():
+            for followed_user in login_user.user.followed_by.all():
+                # followed_userはユーザー情報のため「.user」にする
+                if following_user == followed_user.user:
+                    mutual_follow_user.append(following_user)
         context['posts'] = post_list
-        # context['user_information'] = user_information
-        context['login_user_information'] = login_user_information
+        context['login_user'] = login_user
+        context['mutual_follow_user'] = mutual_follow_user
         return context
 
 class Following_DetailView(DetailView):

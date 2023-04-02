@@ -4,6 +4,9 @@
 
 <div class="text-left">
     <h2>{{post.title}}</h2>
+    <h7>
+        <a href="{% url 'userpage' post.user.pk %}">{{post.user.username}} さん</a>
+    </h7>
     <p>{{post.prefecture}}</p>
     <p>[旅行日]  {{post.start_date}} ～ {{post.end_date}}</p>
     <p>[メモ]  {{post.memo}}</p>

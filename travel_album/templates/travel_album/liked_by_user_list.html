@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mb-3">
+    <h3>「{{ diary.title }}」をいいねしたユーザー</h3>
+</div>
+{% for liked_by_user in liked_by_users %}
+<p>
+    <a href="{% url 'userpage' liked_by_user.user.pk %}">{{ liked_by_user.user.username }}</a>
+</p>
+{% endfor %}
+
+{% endblock %}

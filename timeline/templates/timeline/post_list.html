@@ -4,7 +4,9 @@
 
 {% for post in posts %}
 <div class="card mt-3">
-    <h8 class="card-header">{{post.user.username}} さん</h8>
+    <h8 class="card-header">
+      <a href="{% url 'userpage' post.user.pk %}">{{post.user.username}} さん</a>
+    </h8>
     <div class="card-body">
       <h3 class="card-title">{{post.title}}</h3>
       <p class="card-text">{{post.start_date}} ～ {{post.end_date}}</p>

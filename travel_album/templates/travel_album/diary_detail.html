@@ -7,6 +7,7 @@
     <p>{{diary.prefecture}}</p>
     <p>[旅行日]  {{diary.start_date}} ～ {{diary.end_date}}</p>
     <p>[メモ]  {{diary.memo}}</p>
+    <a href="{% url 'liked-by' diary.pk %}">{{ liked_by_user|length }} いいね</a>
     {% for album in album_list %}
     <a href="{% url 'photo-list' album.diary.pk album.pk %}">{{ album.location }}</a>
     <a href="{% url 'album-delete' album.diary.pk album.pk %}">削除</a>

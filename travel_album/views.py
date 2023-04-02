@@ -32,14 +32,28 @@ class Diary_DetailView(DetailView):
     context_object_name = 'diary'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        album_list = Album.objects.filter(diary_id=self.kwargs['pk'])
+        this_diary = Diary.objects.get(id=self.kwargs['pk'])
+        album_list = Album.objects.filter(diary_id=this_diary.pk)
+        liked_by_user = this_diary.liked_by.all()
         photo_list = []
         for album_name in album_list:
             photo = Photo.objects.filter(album=album_name)
             photo_list.append(photo)
         context['album_list'] = album_list
+        context['liked_by_user'] = liked_by_user
         context['album_add'] = AlbumAddForms
         context['photo_list'] = photo_list
+        return context
+
+class liked_by_user_DetailView(DeleteView):
+    model = Diary
+    template_name = 'travel_album/liked_by_user_list.html'
+    context_object_name = 'diary'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        this_diary = Diary.objects.get(id=self.kwargs['pk'])
+        liked_by_user = this_diary.liked_by.all()
+        context['liked_by_users'] = liked_by_user
         return context
 
 class Album_addView(CreateView):

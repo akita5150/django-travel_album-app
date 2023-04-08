@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from timeline.models import Comment
+from timeline.forms import CommentForms
 from travel_album.models import Diary, Album, Photo
 from accounts.models import User_information
+from django.shortcuts import get_object_or_404, redirect
 
 # Create your views here.
 class PostListView(ListView):
@@ -34,8 +37,23 @@ class PostDetailView(DetailView):
             photo = Photo.objects.filter(album=album_name)
             photo_list.append(photo)
         login_user_information = User_information.objects.get(user=self.request.user)
+        comment_list = Comment.objects.filter(post_id=self.kwargs['pk'])
         context['album_list'] = album_list
         context['photo_list'] = photo_list
         context['login_user_information'] = login_user_information
+        context['comment_form'] = CommentForms
+        context['comment_list'] = comment_list
         return context
     
+class Comment_CreateView(CreateView):
+    model = Comment
+    form_class = CommentForms
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        post_pk = self.kwargs['diary_pk']
+        post = get_object_or_404(Diary, pk=post_pk, is_publish=True)
+        user = self.request.user
+        comment.post = post
+        comment.user = user
+        comment.save()
+        return redirect('post-detail', pk=post_pk)

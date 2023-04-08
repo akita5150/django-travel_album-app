@@ -4,7 +4,7 @@
 <div class="text-left m-3" >
     <h1>{{user.username}}</h1>
     <p><a href="{% url 'following-list' user.pk %}">フォロー中</a>　　　<a href="{% url 'follower-list' user.pk %}">フォロワー</a></p>
-    <p></p>
+    <p><a href="{% url 'like-post' %}">いいねした投稿</a></p>
 </div>
 {% for diary in diaries %}
 

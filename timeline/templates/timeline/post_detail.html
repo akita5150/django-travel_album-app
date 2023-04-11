@@ -45,6 +45,11 @@
 {% for comment in comment_list %}
     <p>{{ comment.user }}</p>
     <p>{{ comment.text }}</p>
+    {% for reply in reply_list %}
+        {% if reply.comment == comment %}
+            <p>　↳{{ reply.text }}</p>
+        {% endif %}
+    {% endfor %}
 {% endfor %}
 
   <h4 class="mt-3">コメント</h4>

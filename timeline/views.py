@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from timeline.models import Comment
+from timeline.models import Comment, Reply
 from timeline.forms import CommentForms
 from travel_album.models import Diary, Album, Photo
 from accounts.models import User_information
@@ -38,11 +38,13 @@ class PostDetailView(DetailView):
             photo_list.append(photo)
         login_user_information = User_information.objects.get(user=self.request.user)
         comment_list = Comment.objects.filter(post_id=self.kwargs['pk'])
+        reply_list = Reply.objects.filter(comment__in=comment_list)
         context['album_list'] = album_list
         context['photo_list'] = photo_list
         context['login_user_information'] = login_user_information
         context['comment_form'] = CommentForms
         context['comment_list'] = comment_list
+        context['reply_list'] = reply_list
         return context
     
 class Comment_CreateView(CreateView):

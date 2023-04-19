@@ -59,3 +59,7 @@ class Comment_CreateView(CreateView):
         comment.user = user
         comment.save()
         return redirect('post-detail', pk=post_pk)
+    
+class Reply_CreateView(CreateView):
+    model = Reply
+    

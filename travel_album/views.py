@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from travel_album.models import Diary, Album, Photo
-from travel_album.forms import AlbumAddForms, PhotoAddForms
+from travel_album.forms import AlbumAddForms, PhotoAddForms, ReplyForms
 from accounts.models import User_information
+from timeline.models import Reply, Comment
 from django import forms
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,10 +40,14 @@ class Diary_DetailView(DetailView):
         for album_name in album_list:
             photo = Photo.objects.filter(album=album_name)
             photo_list.append(photo)
+        comment_list = Comment.objects.filter(post_id=self.kwargs['pk'])
+        reply_list = Reply.objects.filter(comment__in=comment_list)
         context['album_list'] = album_list
         context['liked_by_user'] = liked_by_user
         context['album_add'] = AlbumAddForms
         context['photo_list'] = photo_list
+        context['comment_list'] = comment_list
+        context['reply_list'] = reply_list
         return context
 
 class liked_by_user_DetailView(DeleteView):
@@ -156,4 +161,19 @@ class Photo_DeleteView(DeleteView):
     context_object_name = "Photo"
     def get_success_url(self):
         return reverse('photo-list', kwargs={'diary_pk':self.object.album.diary.pk,'pk':self.object.album.pk})
+    
+class Reply_CreateView(CreateView):
+    model = Reply
+    form_class = ReplyForms
+    template_name = "travel_album/reply_create.html"
+    def form_valid(self, form):
+        reply = form.save(commit=False)
+        comment_pk = self.kwargs['comment_pk']
+        comment = get_object_or_404(Comment, pk=comment_pk)
+        user = self.request.user
+        reply.comment = comment
+        reply.user = user
+        reply.save()
+        comment_post_pk = comment.post.pk
+        return redirect('diary-detail', comment_post_pk)
 

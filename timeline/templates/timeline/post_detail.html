@@ -11,7 +11,7 @@
     <p>[旅行日]  {{post.start_date}} ～ {{post.end_date}}</p>
     <p>[メモ]  {{post.memo}}</p>
     {% if post in login_user_information.like_post.all %}
-    <a href="{% url 'like-remove' post.pk %}" class="btn">👍</a>
+    <a href="{% url 'like-remove' post.pk %}" class="btn">いいね済み</a>
     {% else %}
     <a href="{% url 'like' post.pk %}" class="btn">いいねする</a>
     {% endif %}

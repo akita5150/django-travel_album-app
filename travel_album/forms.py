@@ -1,5 +1,6 @@
 from django import forms
 from travel_album.models import Photo, Album, Diary
+from timeline.models import Reply
 
 class AlbumAddForms(forms.ModelForm):
     class Meta:
@@ -21,4 +22,9 @@ class PhotoAddForms(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('photo',)
+
+class ReplyForms(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ('text',)
 

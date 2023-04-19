@@ -24,6 +24,19 @@
         <br>
     </div>
     {% endfor %}
+
+    {% for comment in comment_list %}
+    <p>{{ comment.user }}</p>
+    <p>{{ comment.text }}</p>
+    {% for reply in reply_list %}
+        {% if reply.comment == comment %}
+            <p>　↳{{ reply.text }}</p>
+        {% endif %}
+    {% endfor %}
+    <a href="{% url 'reply-create' comment.post.pk comment.pk %}">返信する</a>
+    
+{% endfor %}
+
     <p>
       {% for tag in diary.tags.all %}
       <span class="badge bg-light text-dark">

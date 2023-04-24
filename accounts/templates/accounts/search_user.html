@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="text-left">
+    <h2>フォロワー</h2>
+    {% for user in user_list %}
+    <p>
+        <a href="{% url 'userpage' user.pk %}">{{ user.username }}</a>
+    </p>
+    {% endfor %} 
+</div>
+
+{% endblock content %}

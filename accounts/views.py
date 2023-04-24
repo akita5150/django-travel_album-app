@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from accounts.models import User_information
 from travel_album.models import Diary
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 # Create your views here.
 class MyLoginView(LoginView):
@@ -99,3 +100,22 @@ def Follow_remove(request,id):
     login_user_information.save()
     return redirect('userpage', user.id)
 
+class Search_userListView(ListView):
+    model = User
+    template_name = "accounts/search_user.html"
+    context_object_name = "user_list"
+
+    def get_queryset(self):
+        self.query = self.request.GET.get('query') or ""
+        queryset = super().get_queryset()
+
+        if self.query:
+            queryset = queryset.filter(
+               Q(username__icontains=self.query) 
+            )
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.query
+        return context

@@ -153,7 +153,8 @@ class Photo_addView(CreateView):
         album = get_object_or_404(Album, pk=album_pk)
         photo.album = album
         photo.save()
-        return redirect('diary-detail', pk=album_pk)
+        diary_pk = album.diary.pk
+        return redirect('diary-detail', pk=diary_pk)
 
 class Photo_DeleteView(DeleteView):
     model = Photo

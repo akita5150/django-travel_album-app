@@ -35,6 +35,10 @@
             </li>
             {% endif %}
           </ul>
+          <form action="{% url 'search-user' %}" method="GET" class="d-flex">
+            <input class="form-control me-2" type="text" name="query" placeholder="ユーザー検索" value="{{ query }}">
+            <input class="btn btn-outline-success" type="submit" value="検索">
+          </form>
         </div>
       </div>
     </nav>

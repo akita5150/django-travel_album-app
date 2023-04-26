@@ -1,5 +1,5 @@
 from django.urls import include, path
-from travel_album.views import Diary_listView, Diary_DetailView, liked_by_user_DetailView, Diary_DeleteView, Album_listView, Photo_listView, Album_DetailView, Diary_CreateView, Diary_UpdateView, Album_addView, Album_DeleteView, Photo_addView, Photo_DeleteView, Reply_CreateView
+from travel_album.views import Diary_listView, Diary_DetailView, liked_by_user_DetailView, Diary_DeleteView, Album_listView, Album_DetailView, Diary_CreateView, Diary_UpdateView, Album_addView, Album_DeleteView, Photo_addView, Photo_DeleteView, Reply_CreateView
 
 
 urlpatterns = [

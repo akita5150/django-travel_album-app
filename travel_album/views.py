@@ -121,15 +121,15 @@ class Album_DeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse('diary-detail', kwargs={'pk':self.object.diary.pk})
 
-class Photo_listView(ListView):
-    model = Photo
-    template_name = 'travel_album/photo_list.html'
-    context_object_name = 'Photos'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        Photo_list = Photo.objects.filter(album_id=self.kwargs['album_pk'])
-        context["Photos"] = Photo_list
-        return context
+# class Photo_listView(ListView):
+#     model = Photo
+#     template_name = 'travel_album/photo_list.html'
+#     context_object_name = 'Photos'
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         Photo_list = Photo.objects.filter(album_id=self.kwargs['album_pk'])
+#         context["Photos"] = Photo_list
+#         return context
 
 class Album_DetailView(DetailView):
     model = Album

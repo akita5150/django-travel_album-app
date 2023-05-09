@@ -4,10 +4,10 @@
 
 
 <div class="text-left">
-    <h2>フォロワー</h2>
+    <h2>"{{query}}"を含むユーザー</h2>
     {% for user in user_list %}
     <p>
-        <a href="{% url 'userpage' user.pk %}">{{ user.username }}</a>
+        <a href="{% url 'userpage' user.pk %}" class="link-secondary text-decoration-none">{{ user.username }}</a>
     </p>
     {% endfor %} 
 </div>

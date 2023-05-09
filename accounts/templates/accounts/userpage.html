@@ -3,7 +3,7 @@
 {% block content %}
 <div class="text-left m-3">
     <h1>{{User.username}}</h1>
-    <p><a href="{% url 'following-list' User.pk %}">フォロー中</a>　　　<a href="{% url 'follower-list' User.pk %}">フォロワー</a></p>
+    <p><a href="{% url 'following-list' User.pk %}" class="link-secondary text-decoration-none">フォロー中</a>　　　<a href="{% url 'follower-list' User.pk %}" class="link-secondary text-decoration-none">フォロワー</a></p>
     {% if User in login_user.following.all %}
     <a href="{% url 'follow-remove' User.pk %}" class="btn btn-primary">フォロー中</a>
     {% else %}

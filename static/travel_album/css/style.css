@@ -1,0 +1,17 @@
+body {
+    font-family: '游ゴシック';
+}
+
+.footerFixed {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+footer {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%,0%);
+}

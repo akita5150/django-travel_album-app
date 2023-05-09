@@ -7,7 +7,7 @@
     <h2>フォロワー</h2>
     {% for follower in follower_list.all %}
     <p>
-        <a href="{% url 'userpage' follower.pk %}">{{ follower.user }}</a>
+        <a href="{% url 'userpage' follower.pk %}"class="link-secondary text-decoration-none">{{ follower.user }}</a>
     </p>
     {% endfor %} 
 </div>

@@ -1,0 +1,13 @@
+.footerFixed {
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+    background-color: aqua;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+}

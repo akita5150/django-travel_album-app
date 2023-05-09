@@ -7,7 +7,7 @@
     <h2>フォロー中</h2>
     {% for following in information.following.all %}
     <p>
-        <a href="{% url 'userpage' following.pk %}">{{ following }}</a>
+        <a href="{% url 'userpage' following.pk %}" class="link-secondary text-decoration-none">{{ following }}</a>
     </p>
     {% endfor %} 
 </div>

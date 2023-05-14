@@ -7,18 +7,27 @@ from accounts.models import User_information
 from travel_album.models import Diary
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class MyLoginView(LoginView):
     template_name = 'accounts/login.html'
     redirect_authenticated_user = True 
+    def form_valid(self, form):
+        valid = super().form_valid(form)
+        user_name = self.request.POST.get('username')
+        login_user = User.objects.get(username=user_name)
+        if User_information.objects.filter(user=login_user).exists() == False:
+            User_information.objects.create(user=login_user)
+        return valid
 
 class SignUpView(CreateView):
     template_name = 'accounts/signup.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('diary-list')
 
-class UserPage_View(DetailView):
+class UserPage_View(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'accounts/userpage.html'
     context_object_name = 'User'
@@ -37,19 +46,18 @@ class UserPage_View(DetailView):
         context['mutual_follow_user'] = mutual_follow_user
         return context
 
-class Following_DetailView(DetailView):
+class Following_DetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'accounts/following_list.html'
     context_object_name = 'User'
     def get_context_data(self, **kwargs):
         a_u = self.request.user
-        print(a_u.followed_by.all())
         context = super().get_context_data(**kwargs)
         information = User_information.objects.get(user_id=self.kwargs['pk'])
         context['information'] = information
         return context
     
-class Follower_DetailView(DetailView):
+class Follower_DetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'accounts/follower_list.html'
     context_object_name = 'User'
@@ -60,7 +68,7 @@ class Follower_DetailView(DetailView):
         context['follower_list'] = follower_list 
         return context
 
-class Like_postView(ListView):
+class Like_postView(LoginRequiredMixin, ListView):
     model = Diary
     template_name = 'accounts/like_post.html'
     context_object_name = 'posts'
@@ -68,7 +76,8 @@ class Like_postView(ListView):
         login_user_information = User_information.objects.get(user=self.request.user)
         post = login_user_information.like_post.all()
         return post
-    
+
+@login_required
 def Like(request,id):
     post = get_object_or_404(Diary, pk=id)
     login_user_information = User_information.objects.get(user=request.user)
@@ -100,7 +109,7 @@ def Follow_remove(request,id):
     login_user_information.save()
     return redirect('userpage', user.id)
 
-class Search_userListView(ListView):
+class Search_userListView(LoginRequiredMixin, ListView):
     model = User
     template_name = "accounts/search_user.html"
     context_object_name = "user_list"

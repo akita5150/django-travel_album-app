@@ -5,9 +5,10 @@ from timeline.forms import CommentForms
 from travel_album.models import Diary, Album, Photo
 from accounts.models import User_information
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Diary
     template_name = 'timeline/post_list.html'
     context_object_name = 'posts'
@@ -24,7 +25,7 @@ class PostListView(ListView):
         post = Diary.objects.filter(is_publish=True, user_id__in=mutual_follow_user_id)
         return post
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Diary
     template_name = 'timeline/post_detail.html'
     context_object_name = 'post'
@@ -47,7 +48,7 @@ class PostDetailView(DetailView):
         context['reply_list'] = reply_list
         return context
     
-class Comment_CreateView(CreateView):
+class Comment_CreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForms
     def form_valid(self, form):
@@ -60,6 +61,4 @@ class Comment_CreateView(CreateView):
         comment.save()
         return redirect('post-detail', pk=post_pk)
     
-class Reply_CreateView(CreateView):
-    model = Reply
     

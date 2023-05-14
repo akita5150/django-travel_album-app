@@ -27,7 +27,7 @@ class Diary_DeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'travel_album/diary_delete.html'
     success_url = reverse_lazy('diary-list')
 
-class Diary_DetailView(DetailView):
+class Diary_DetailView(LoginRequiredMixin, DetailView):
     model = Diary
     template_name = 'travel_album/diary_detail.html'
     context_object_name = 'diary'
@@ -50,7 +50,7 @@ class Diary_DetailView(DetailView):
         context['reply_list'] = reply_list
         return context
 
-class liked_by_user_DetailView(DeleteView):
+class liked_by_user_DetailView(LoginRequiredMixin, DeleteView):
     model = Diary
     template_name = 'travel_album/liked_by_user_list.html'
     context_object_name = 'diary'
@@ -61,7 +61,7 @@ class liked_by_user_DetailView(DeleteView):
         context['liked_by_users'] = liked_by_user
         return context
 
-class Album_addView(CreateView):
+class Album_addView(LoginRequiredMixin, CreateView):
     model = Album
     form_class = AlbumAddForms
     def form_valid(self, form):
@@ -74,7 +74,7 @@ class Album_addView(CreateView):
         album.save()
         return redirect('diary-detail', pk=diary_pk)
 
-class Diary_CreateView(CreateView):
+class Diary_CreateView(LoginRequiredMixin, CreateView):
     model = Diary
     template_name = 'travel_album/diary_create.html'
     fields = ['title','prefecture', 'start_date', 'end_date', 'memo']
@@ -93,7 +93,7 @@ class Diary_CreateView(CreateView):
         id = self.object.id
         return reverse("diary-detail", kwargs={"pk": id})
 
-class Diary_UpdateView(UpdateView):
+class Diary_UpdateView(LoginRequiredMixin, UpdateView):
     model = Diary
     template_name = 'travel_album/diary_edit.html'
     fields = ['title','prefecture', 'start_date', 'end_date', 'memo']
@@ -104,7 +104,7 @@ class Diary_UpdateView(UpdateView):
         return reverse("diary-detail", kwargs={"pk": id})
 
     
-class Album_listView(ListView):
+class Album_listView(LoginRequiredMixin, ListView):
     model = Album
     template_name = 'travel_album/album_list.html'
     context_object_name = 'Albums'
@@ -131,7 +131,7 @@ class Album_DeleteView(LoginRequiredMixin, DeleteView):
 #         context["Photos"] = Photo_list
 #         return context
 
-class Album_DetailView(DetailView):
+class Album_DetailView(LoginRequiredMixin, DetailView):
     model = Album
     template_name = 'travel_album/photo_list.html'
     context_object_name = 'Album'
@@ -142,13 +142,12 @@ class Album_DetailView(DetailView):
         context['photo_add'] = PhotoAddForms
         return context
 
-class Photo_addView(CreateView):
+class Photo_addView(LoginRequiredMixin, CreateView):
     model = Photo
     form_class = PhotoAddForms
     def form_valid(self, form):
         # saveしない
         photo = form.save(commit=False)
-        # diaryが実在するか確認
         album_pk = self.kwargs['album_pk']
         album = get_object_or_404(Album, pk=album_pk)
         photo.album = album
@@ -156,14 +155,14 @@ class Photo_addView(CreateView):
         diary_pk = album.diary.pk
         return redirect('diary-detail', pk=diary_pk)
 
-class Photo_DeleteView(DeleteView):
+class Photo_DeleteView(LoginRequiredMixin, DeleteView):
     model = Photo
     template_name = "travel_album/photo_delete.html"
     context_object_name = "Photo"
     def get_success_url(self):
         return reverse('photo-list', kwargs={'diary_pk':self.object.album.diary.pk,'pk':self.object.album.pk})
     
-class Reply_CreateView(CreateView):
+class Reply_CreateView(LoginRequiredMixin, CreateView):
     model = Reply
     form_class = ReplyForms
     template_name = "travel_album/reply_create.html"

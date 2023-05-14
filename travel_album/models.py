@@ -42,7 +42,7 @@ class Album(models.Model):
 
 class Photo(models.Model):
     album = models.ForeignKey(Album, verbose_name='場所', on_delete=models.CASCADE)
-    photo = models.ImageField(verbose_name='写真', upload_to='uploads/', null=True, blank=True)
+    photo = models.ImageField(verbose_name='写真', upload_to='uploads/')
 
     def __str__(self):
         return f'{self.album}の写真'

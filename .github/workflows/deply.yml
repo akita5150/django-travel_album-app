@@ -18,6 +18,6 @@ jobs:
      - name: Deploy
        run: |
          # SSH接続して、git pullする
-         eval "$(ssh-agent -s)"
-         echo "${{ secrets.PRIVATE_KEY }}" | ssh-add -
+         echo "${{ secrets.PRIVATE_KEY }}" > private_key
+         chmod 600 private_key
          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd django-travel_album-app && git fetch origin && git pull origin main"

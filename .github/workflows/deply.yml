@@ -1,5 +1,5 @@
 # Workflowの名前。任意に設定可能
-name: EC2 auto deploy
+name: EC2 auto deploy by hayato
 
 # アクションが実行されるタイミングを設定。今回はmainブランチにpushされた時。
 on:
